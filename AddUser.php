@@ -1,12 +1,12 @@
-\
-link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.css">
+
+
 <?php
 //Start the session
 session_start();
 ?>
 
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.css">
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,8 +27,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.c
 <div class="container">
 <form action="insert.php" method="post">
 Name: <input type="text" name="name"><br>
-Password : <input type="text" name="password"><br>
-<input type="sing up" class="btn">
+Surname:<input type="text" name="surname"><br>
+Role:     <select name="Roles" >
+        <option value="1">Admin</option>
+        <option value="2">User</option>
+    </select><br>
+Password : <input type="password" name="password"><br>
+<input type="submit" value="Submit" class="btn">
 </form>
 </div>
 </body>
