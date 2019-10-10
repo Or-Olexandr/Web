@@ -19,7 +19,7 @@ if(count($_POST)>0){
 	else{
 		echo "invalid password";
 		header('Location: '.$newURL);
-		header('Location: infoAboutUser.php');
+		header('Location: login.php');
 	}
 	}
 ?>
