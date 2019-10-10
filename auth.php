@@ -8,14 +8,18 @@ if(count($_POST)>0){
 	$_POST["password"]."\";");
 	$row = mysqli_fetch_array($res);
 	if(is_array($row)){
-		$_SESSION["name"] = $row["id"];
+	    $_SESSION["id"] = $row["id"];
+		$_SESSION["name"] = $row["first_name"];
 		$_SESSION["password"] = $row["password"];
+		$_SESSION["auth"] = true;
 		echo "authorization";
+        header('Location: '.$newURL);
+        header('Location: infoAboutUser.php');
 	}
 	else{
 		echo "invalid password";
 		header('Location: '.$newURL);
-		header('Location: restricted.php');
+		header('Location: infoAboutUser.php');
 	}
 	}
 ?>
