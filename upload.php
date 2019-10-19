@@ -1,27 +1,5 @@
 <?php
 session_start();
-require_once "db.php";
-if($_POST["name"]==="") {
-    $_SESSION["error"] = "name can`t be empty";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
-}
-elseif ($_POST["surname"]===""){
-    $_SESSION["error"] = "surname can`t be empty";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
-    }
-elseif (strlen($_POST["password"])<=6){
-    $_SESSION["error"] = "Short password";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
-    }
-elseif ($_POST["Roles"]==="Role"){
-    $_SESSION["error"] = "Choose role";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
-    }
-else{
 $target_dir = "public/images/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -60,15 +38,8 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+        $_SESSION["target_file"] = $target_file;
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }
-    mysqli_query($conn, "INSERT INTO users (first_name, last_name, password, image, id_role)
-VALUES (\"" . $_POST["name"] . "\",\"" . $_POST["surname"] . "\",\"" . $_POST["password"] . "\",\"" .$target_file."\",\"". $_POST["Roles"] . "\");");
-    $_SESSION["error"]="";
-    header('Location: ' . $newURL);
-    header('Location: infoAboutUser.php');
-}
-?>
-

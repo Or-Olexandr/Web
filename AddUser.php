@@ -22,17 +22,54 @@ href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.c
 
 </head>
 <body style="padding-top: 3rem;">
-<form action="insert.php" method="post">
+<?php
+if(isset($_SESSION["auth"])){?>
+    <img src= <?php echo $_SESSION["image"];?> width="200" height="150"/>
+    <form action="ChangeUser.php" method="post">
+        <div class="form-group">
+            <label for="exampleInputName">Name</label>
+            <input type="text" value=<?php echo $_SESSION["name"];?> class="form-control" id="exampleInputName" name="name" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputSurname">Surname</label>
+            <input type="text" value=<?php echo $_SESSION["surname"];?> class="form-control" id="exampleInputSurname" name="surname" placeholder="Enter Surname">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" value=<?php echo $_SESSION["password"];?> class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+        </div>
+        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="Roles">
+            <option selected><?php echo $_SESSION["Role"];?></option>
+            <option value="1">Admin</option>
+            <option value="2">User</option>
+        </select><br>
+        <h1></h1>
+        <div class="form-group">
+            <label for="exampleInputImage"> Image</label>
+            <input type="file" class="form-control" name="image" placeholder="Enter name">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <p class="h1"><?php
+        if(isset($_SESSION["error"]))
+            echo $_SESSION["error"]?>
+    </p>
+
+<?php  }
+else {?>
+
+<form action="insert.php" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="exampleInputName">Name</label>
+        <label for="exampleInputName"> Name</label>
         <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="Enter name">
     </div>
     <div class="form-group">
-        <label for="exampleInputSurname">Surname</label>
+        <label for="exampleInputSurname"> Surname</label>
         <input type="text" class="form-control" id="exampleInputName" name="surname" placeholder="Enter Surname">
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
+        <label for="exampleInputPassword1"> Password</label>
         <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
     </div>
         <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
@@ -42,11 +79,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.c
         <option value="2">User</option>
     </select><br>
     <h1></h1>
+    <div class="form-group">
+        <label for="exampleInputImage"> Image</label><br>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <p class="h1"><?php
 if(isset($_SESSION["error"]))
 echo $_SESSION["error"]?>
 </p>
+<?php }?>
 </body>
 </html>

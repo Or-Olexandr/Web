@@ -10,7 +10,7 @@ require_once "db.php";
 <!doctype html>
 <html lang="en">
 <style>
-    .btnshapka{display: inline-block; margin: 0px 0px 0px 1350px;}
+    .btnshapka{display: inline-block; margin: 0px 0px 0px 1300px;}
 </style>
 
 <head>
@@ -26,7 +26,7 @@ maximum-scale=1.0, minimum-scale=1.0">
 <body style="padding-top: 3rem;">
 <?php if(isset($_SESSION["auth"])){?>
 <form action="HandlerButtonAuth.php" method="post" class="btnshapka">
-    <button type="submit"  class="btn btn-outline-primary" name="SignIn"><?php  echo $_SESSION["name"];?></button>
+    <button type="submit"  class="btn btn-outline-primary" name="SignIn"><?php  echo isset($_SESSION["name"])?$_SESSION["name"]:'';?></button>
     <button type="submit"  class="btn btn-outline-secondary" name="SignOut">Sign Out</button>
 </form>
 <?php }
@@ -40,6 +40,7 @@ else {?>
     <thead class="thead-dark">
     <tr>
         <th scope="col">#</th>
+        <th scope="col">Image</th>
         <th scope="col">First_Name</th>
         <th scope="col">Last_Name</th>
         <th scope="col">Role</th>
@@ -53,6 +54,7 @@ if ($res->num_rows > 0)
     <tbody>
     <tr>
         <th scope="row"><?php echo $row["id"];?></th>
+        <td width="400"> <img src= <?php echo $row["image"];?> width="200" height="150"/></td>
         <td><?php echo $row["first_name"];?></td>
         <td><?php echo $row["last_name"];?></td>
         <td><?php echo mysqli_query($conn,"SELECT * from roles WHERE id=\"".$row["id_role"]."\";" )->fetch_assoc()["title"];?></td>

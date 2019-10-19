@@ -5,6 +5,7 @@ header('Location: '.$newURL);
 header('Location: AddUser.php');
 }
 else{
+    $_SESSION["auth"] = false;
     session_unset();
     session_destroy();
    header('Location: '.$newURL);
