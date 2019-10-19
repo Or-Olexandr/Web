@@ -61,5 +61,15 @@ if ($res->num_rows > 0)
     </tr>
 	<?php } ?>
 </table>
+<?php if(isset($_SESSION["Role"])) if($_SESSION["Role"]==="Admin"){?>
+<h1>              </h1><br>
+<form action="AdminWork.php" method="post" >
+    <button type="submit"  class="btn btn-primary"  name="AddUser">AddUser</button>
+    <button class="btn btn-primary" type="submit" name="ChangeUser">ChangeUser</button>
+     Number user: <input type = "number" name="id_user_change">
+    <button class="btn btn-primary" type="submit" name="DeleteUser">DeleteUser</button>
+    Number user:<input type = "number" name="id_user_delete">
+</form><?php }?>
+
 </body>
 </html>

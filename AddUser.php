@@ -24,8 +24,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/materialize.min.c
 <body style="padding-top: 3rem;">
 <?php
 if(isset($_SESSION["auth"])){?>
-    <img src= <?php echo $_SESSION["image"];?> width="200" height="150"/>
+    <table>
+    <tr>
+        <th width="400px" scope="col"></th>
+        <th scope="col"></th>
+    </tr>
     <form action="ChangeUser.php" method="post">
+        <tr>
+            <td width="400"> <img src= <?php echo $_SESSION["image"];?> width="200"  class="rounded mx-auto d-block" height="150"/><br>
+                <div class="form-group">
+                    <input type="file" class="form-control" name="image" placeholder="Enter name">
+                </div>
+            </td>
+            <td>
         <div class="form-group">
             <label for="exampleInputName">Name</label>
             <input type="text" value=<?php echo $_SESSION["name"];?> class="form-control" id="exampleInputName" name="name" placeholder="Enter name">
@@ -45,12 +56,12 @@ if(isset($_SESSION["auth"])){?>
             <option value="2">User</option>
         </select><br>
         <h1></h1>
-        <div class="form-group">
-            <label for="exampleInputImage"> Image</label>
-            <input type="file" class="form-control" name="image" placeholder="Enter name">
-        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+        </td>
+        </tr>
+    </table>
     <p class="h1"><?php
         if(isset($_SESSION["error"]))
             echo $_SESSION["error"]?>
