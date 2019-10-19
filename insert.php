@@ -22,6 +22,14 @@ elseif ($_POST["Roles"]==="Role"){
     header('Location: AddUser.php');
     }
 else{
+    $res = mysqli_query($conn, "SELECT * from users WHERE first_name=\"".$_POST["name"]."\";");
+    $row = mysqli_fetch_array($res);
+    if(is_array($row)){
+        $_SESSION["error"] = "This user already exists";
+        header('Location: ' . $newURL);
+        header('Location: AddUser.php');
+        die();
+    }
 $target_dir = "public/images/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -39,25 +47,15 @@ if(isset($_POST["submit"])) {
 }
 // Check if file already exists
 if (file_exists($target_file)) {
-    $_SESSION["error"] = "Sorry, file already exists.";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
-    die();
     $uploadOk = 0;
 }
 // Check file size
 if ($_FILES["fileToUpload"]["size"] > 500000) {
-    $_SESSION["error"] = "Sorry, your file is too large.";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
     $uploadOk = 0;
 }
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
     && $imageFileType != "gif" ) {
-    $_SESSION["error"] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    header('Location: ' . $newURL);
-    header('Location: AddUser.php');
     $uploadOk = 0;
 }
 // Check if $uploadOk is set to 0 by an error
@@ -67,10 +65,6 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-    } else {
-        $_SESSION["error"] =  "Sorry, there was an error uploading your file.";
-        header('Location: ' . $newURL);
-        header('Location: AddUser.php');
     }
 }
     mysqli_query($conn, "INSERT INTO users (first_name, last_name, password, image, id_role)

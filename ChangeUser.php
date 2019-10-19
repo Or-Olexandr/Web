@@ -23,6 +23,7 @@ elseif ($_POST["Roles"]==="Role"){
 }
 
 else{
+
     $id_roles = $_POST["Roles"];
     if($_POST["Roles"]==="Admin"||$_POST["Roles"]==="User"){
        // echo "SELECT id FROM roles WHERE roles.title = \"".$_POST["Roles"]."\";";
