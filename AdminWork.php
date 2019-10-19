@@ -10,7 +10,8 @@ elseif (!is_null($_POST["ChangeUser"])){
     header('Location: ChangeUserFromAdmin.php');
     }
 else{
-    $_SESSION["id_change_user"] = $_POST["id_user_change"];
+    $_SESSION["id_change_user"] = $_POST["id_user_delete"];
+    echo "hello";
     header('Location: '.$newURL);
-    header('Location: DeleteUser.php');
+    header('Location: deleteUser.php');
 }
