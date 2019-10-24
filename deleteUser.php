@@ -5,6 +5,5 @@ require_once "db.php";
 if($_SESSION["id"]===$_GET["id"]) {
     session_unset();
     session_destroy();}
-    header('Location: ' . $newURL);
     header('Location: infoAboutUser.php');
 

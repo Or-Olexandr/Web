@@ -3,22 +3,18 @@ session_start();
 require_once "db.php";
 if($_POST["name"]==="") {
     $_SESSION["error"] = "name can`t be empty";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
 }
 elseif ($_POST["surname"]===""){
     $_SESSION["error"] = "surname can`t be empty";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
 }
 elseif (strlen($_POST["password"])<=6){
     $_SESSION["error"] = "Short password";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
 }
 elseif ($_POST["Roles"]==="Role"){
     $_SESSION["error"] = "Choose role";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
 }
 
@@ -44,7 +40,6 @@ else{
                 "\"WHERE id = \"" . $_SESSION["id_change_user"] . "\";");
             $_SESSION["error"]="";
             $_SESSION["id_change_user"] = $_SESSION["id"];
-            header('Location: ' . $newURL);
             header('Location: infoAboutUser.php');
             die();
 
@@ -62,7 +57,6 @@ else{
     $_SESSION["password"] = $_POST["password"];
     $_SESSION["Role"] = $_POST["Roles"];
     $_SESSION["error"]="";
-    header('Location: ' . $newURL);
     header('Location: infoAboutUser.php');
 
 }

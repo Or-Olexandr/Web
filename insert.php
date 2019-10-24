@@ -3,22 +3,18 @@ session_start();
 require_once "db.php";
 if($_POST["name"]==="") {
     $_SESSION["error"] = "name can`t be empty";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
 }
 elseif ($_POST["surname"]===""){
     $_SESSION["error"] = "surname can`t be empty";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
     }
 elseif (strlen($_POST["password"])<=6){
     $_SESSION["error"] = "Short password";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
     }
 elseif ($_POST["Roles"]==="Role"){
     $_SESSION["error"] = "Choose role";
-    header('Location: ' . $newURL);
     header('Location: AddUser.php');
     }
 else{
@@ -26,7 +22,6 @@ else{
     $row = mysqli_fetch_array($res);
     if(is_array($row)){
         $_SESSION["error"] = "This user already exists";
-        header('Location: ' . $newURL);
         header('Location: AddUser.php');
         die();
     }
@@ -70,7 +65,6 @@ if ($uploadOk == 0) {
     mysqli_query($conn, "INSERT INTO users (first_name, last_name, password, image, id_role)
 VALUES (\"" . $_POST["name"] . "\",\"" . $_POST["surname"] . "\",\"" . $_POST["password"] . "\",\"" .$target_file."\",\"". $_POST["Roles"] . "\");");
     $_SESSION["error"]="";
-    header('Location: ' . $newURL);
     header('Location: infoAboutUser.php');
 }
 ?>

@@ -56,7 +56,7 @@ if ($res->num_rows > 0)
     while($row = $res->fetch_assoc()) { ?>
     <tbody>
     <tr>
-        <th scope="row"><?php if(isset($_SESSION["Role"])) if($_SESSION["Role"]==="Admin"){?>
+        <th scope="row"><?php $_SESSION["error"] = ""; if(isset($_SESSION["Role"])) if($_SESSION["Role"]==="Admin"){?>
             <p><a href="ChangeUserFromAdmin.php?id=<?php echo $row["id"];?>"><?php echo $row["id"];?></a></p>
             <?php } else echo $row["id"];?></th>
         <td width="400"> <img src= <?php echo $row["image"];?> width="200" height="150"/></td>
@@ -65,7 +65,7 @@ if ($res->num_rows > 0)
         <td><?php echo mysqli_query($conn,"SELECT * from roles WHERE id=\"".$row["id_role"]."\";" )->fetch_assoc()["title"];?></td>
         <?php if(isset($_SESSION["auth"])){
             if(isset($_SESSION["Role"])) if($_SESSION["Role"]==="Admin"){?>
-                <td> <p><a href="ChangeUserFromAdmin.php?id=<?php echo $row["id"];?>"> X </a></p></td><?php }}?>
+                <td> <p><a href="deleteUser.php?id=<?php echo $row["id"];?>"> X </a></p></td><?php }}?>
     </tr>
 	<?php } ?>
 </table>
@@ -73,7 +73,7 @@ if ($res->num_rows > 0)
 <h1>              </h1><br>
 <form action="AddUserFromAdmin.php" method="post" >
     <button type="submit"  class="btn btn-primary"  name="AddUser">AddUser</button>
-</form><?php }?>cl
+</form><?php }?>
 
 </body>
 </html>
