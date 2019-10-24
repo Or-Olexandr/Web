@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "db.php";
-$res = mysqli_query($conn, "SELECT * from users WHERE id=\"".$_SESSION["id_change_user"]."\";");
+$res = mysqli_query($conn, "SELECT * from users WHERE id=\"".$_GET["id"]."\";");
 $row = mysqli_fetch_array($res);
 $role = mysqli_query($conn,"SELECT * from roles WHERE id=\"".$row["id_role"]."\";" )->fetch_assoc()["title"];
 if(is_array($row)){
