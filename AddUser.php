@@ -33,7 +33,7 @@ if(isset($_SESSION["auth"])){?>
         <tr>
             <td width="400"> <img src= <?php echo $_SESSION["image"];?> width="200"  class="rounded mx-auto d-block" height="150"/><br>
                 <div class="form-group">
-                    <input type="file" class="form-control" name="image" placeholder="Enter name">
+                    <input type="file"  name="fileToUpload" id="fileToUpload" >
                 </div>
             </td>
             <td>

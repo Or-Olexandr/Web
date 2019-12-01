@@ -1,24 +1,41 @@
 <?php
 session_start();
 require_once "db.php";
-if($_POST["name"]==="") {
-    $_SESSION["error"] = "name can`t be empty";
-    header('Location: AddUser.php');
-}
-elseif ($_POST["surname"]===""){
-    $_SESSION["error"] = "surname can`t be empty";
-    header('Location: AddUser.php');
-}
-elseif (strlen($_POST["password"])<=6){
-    $_SESSION["error"] = "Short password";
-    header('Location: AddUser.php');
-}
-elseif ($_POST["Roles"]==="Role"){
-    $_SESSION["error"] = "Choose role";
-    header('Location: AddUser.php');
-}
+//$data_from_post = json_decode(file_get_contents('php://input'),true);
 
-else{
+$target_dir = "public/images/";
+$target_file = $target_dir . basename($_FILES["image"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+// Check if image file is a actual image or fake image
+// Check if file already exists
+if (file_exists($target_file)) {
+    echo "Sorry, file already exists.";
+    $uploadOk = 0;
+}
+// Check file size
+if ($_FILES["image"]["size"] > 500000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+}
+// Allow certain file formats
+if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" ) {
+    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    $uploadOk = 0;
+}
+// Check if $uploadOk is set to 0 by an error
+if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+} else {
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
+        $_SESSION["target_file"] = $target_file;
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+}
 
     $id_roles = $_POST["Roles"];
     if($_POST["Roles"]==="Admin"||$_POST["Roles"]==="User"){
@@ -27,37 +44,21 @@ else{
        // echo $res;
         $id_roles = mysqli_query($conn,"SELECT id FROM roles WHERE roles.title = \"".$_POST["Roles"]."\";")->fetch_assoc()["id"];
     }
-
-    if(isset($_SESSION["id_change_user"])) {
-        echo $_SESSION["id_change_user"];
-       // echo $_SESSION["id"];
-        if ($_SESSION["id_change_user"] !== $_SESSION["id"]) {
-            echo $_SESSION["id"];
-            mysqli_query($conn, "UPDATE users SET first_name=\"" . $_POST["name"] .
-                "\", last_name=\"" . $_POST["surname"] .
-                "\", password=\"" . $_POST["password"] .
-                "\", id_role=\"" . $id_roles .
-                "\"WHERE id = \"" . $_SESSION["id_change_user"] . "\";");
-            $_SESSION["error"]="";
-            $_SESSION["id_change_user"] = $_SESSION["id"];
-            header('Location: infoAboutUser.php');
-            die();
-
-
-        }
+    if($_POST["image"]!=="NULL"){
+        mysqli_query($conn, "UPDATE users SET first_name=\"" . $_POST["name"] .
+            "\", last_name=\"" . $_POST["surname"] .
+            "\", password=\"" . $_POST["password"] .
+            "\", id_role=\"" . $id_roles .
+            "\", image=\"".$target_file.
+            "\"WHERE first_name = \"" . $_POST["name"] . "\";");
+    }
+    else {
+        mysqli_query($conn, "UPDATE users SET first_name=\"" . $_POST["name"] .
+            "\", last_name=\"" . $_POST["surname"] .
+            "\", password=\"" . $_POST["password"] .
+            "\", id_role=\"" . $id_roles .
+            "\"WHERE first_name = \"" . $_POST["name"] . "\";");
     }
 
-    mysqli_query($conn, "UPDATE users SET first_name=\"". $_POST["name"] .
-        "\", last_name=\"".$_POST["surname"].
-        "\", password=\"".$_POST["password"].
-        "\", id_role=\"".$id_roles.
-        "\"WHERE id = \"".$_SESSION["id"]."\";");
-    $_SESSION["name"] = $_POST["name"];
-    $_SESSION["surname"] =$_POST["surname"];
-    $_SESSION["password"] = $_POST["password"];
-    $_SESSION["Role"] = $_POST["Roles"];
-    $_SESSION["error"]="";
-    header('Location: infoAboutUser.php');
+   echo json_encode($_POST);
 
-}
-?>
